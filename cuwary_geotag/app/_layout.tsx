@@ -1,93 +1,79 @@
-import CAndroidStatusBar from '@/components/common/c-android-status-bar'
-import CIosStatusBar from '@/components/common/c-ios-status-bar'
-import CHomeCameraButton from '@/components/routes/home/c-home-camera-button'
-import { Slot } from 'expo-router'
-import React, { useState } from 'react'
-import { Platform, View, Text, TouchableOpacity } from 'react-native'
-import CHomeMapDataButton from '@/components/routes/home/c-home-map-data-button'
-import CHomeDefaultFolderButton from '@/components/routes/home/c-home-default-folder-button'
-import CHomeLegendButton from '@/components/routes/home/c-home-legend-button'
-import CHomeCollectionButton from '@/components/routes/home/c-home-collection-button'
+"use client"
+
+import CAndroidStatusBar from "@/components/common/c-android-status-bar"
+import CIosStatusBar from "@/components/common/c-ios-status-bar"
+import CHomeCameraButton from "@/components/routes/home/c-home-camera-button"
+import { Slot } from "expo-router"
+import { useState, useEffect, useRef } from "react"
+import { Platform, View, Animated, Text } from "react-native"
+import CHomeMapDataButton from "@/components/routes/home/c-home-map-data-button"
+import CHomeDefaultFolderButton from "@/components/routes/home/c-home-default-folder-button"
+import CHomeLegendButton from "@/components/routes/home/c-home-legend-button"
+import CHomeCollectionButton from "@/components/routes/home/c-home-collection-button"
+import CHomeModeTab from "@/components/routes/home/c-home-mode-tab"
+import CHomeVideoButton from "@/components/routes/home/c-home-video-button"
 
 const CLayoutMain = () => {
     const [selectedType, setSelectedType] = useState<"photo" | "video">("photo")
+    const fadeAnim = useRef(new Animated.Value(1)).current
+    const scaleAnim = useRef(new Animated.Value(1)).current
+
+    useEffect(() => {
+        // Fade out and scale down
+        Animated.parallel([
+            Animated.timing(fadeAnim, {
+                toValue: 0,
+                duration: 150,
+                useNativeDriver: true,
+            }),
+            Animated.timing(scaleAnim, {
+                toValue: 0.8,
+                duration: 150,
+                useNativeDriver: true,
+            }),
+        ]).start(() => {
+            // Fade in and scale up
+            Animated.parallel([
+                Animated.timing(fadeAnim, {
+                    toValue: 1,
+                    duration: 150,
+                    useNativeDriver: true,
+                }),
+                Animated.timing(scaleAnim, {
+                    toValue: 1,
+                    duration: 150,
+                    useNativeDriver: true,
+                }),
+            ]).start()
+        })
+    }, [selectedType, fadeAnim, scaleAnim])
+
     return (
         <>
-            {Platform.OS === 'android' && <CAndroidStatusBar />}
-            {Platform.OS === 'ios' && <CIosStatusBar />}
+            {Platform.OS === "android" && <CAndroidStatusBar />}
+            {Platform.OS === "ios" && <CIosStatusBar />}
             <View
                 style={{
-                    flex: 1
+                    gap: 5,
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: 8
+                }}
+            >
+                <Text>asd</Text>
+                <Text>asd</Text>
+                <Text>asd</Text>
+                <Text>asd</Text>
+            </View>
+            <View
+                style={{
+                    flex: 1,
                 }}
             >
                 <Slot />
             </View>
-            <View
-                style={{
-                    padding: 10,
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                    flexDirection: "row",
-                    gap: 10,
-                }}
-            >
-                <TouchableOpacity
-                    onPress={() => setSelectedType("photo")}
-                    style={{
-                        backgroundColor: selectedType === "photo" ? "#007AFF" : "#2C2C2E",
-                        paddingHorizontal: 24,
-                        paddingVertical: 12,
-                        borderRadius: 12,
-                        minWidth: 100,
-                        alignItems: "center",
-                        shadowColor: selectedType === "photo" ? "#007AFF" : "#000",
-                        shadowOffset: { width: 0, height: 2 },
-                        shadowOpacity: selectedType === "photo" ? 0.4 : 0.2,
-                        shadowRadius: 4,
-                        elevation: 3,
-                    }}
-                    activeOpacity={0.7}
-                >
-                    <Text
-                        style={{
-                            color: selectedType === "photo" ? "#FFFFFF" : "#8E8E93",
-                            fontSize: 16,
-                            fontWeight: "600",
-                        }}
-                    >
-                        Photo
-                    </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    onPress={() => setSelectedType("video")}
-                    style={{
-                        backgroundColor: selectedType === "video" ? "#007AFF" : "#2C2C2E",
-                        paddingHorizontal: 24,
-                        paddingVertical: 12,
-                        borderRadius: 12,
-                        minWidth: 100,
-                        alignItems: "center",
-                        shadowColor: selectedType === "video" ? "#007AFF" : "#000",
-                        shadowOffset: { width: 0, height: 2 },
-                        shadowOpacity: selectedType === "video" ? 0.4 : 0.2,
-                        shadowRadius: 4,
-                        elevation: 3,
-                    }}
-                    activeOpacity={0.7}
-                >
-                    <Text
-                        style={{
-                            color: selectedType === "video" ? "#FFFFFF" : "#8E8E93",
-                            fontSize: 16,
-                            fontWeight: "600",
-                        }}
-                    >
-                        Video
-                    </Text>
-                </TouchableOpacity>
-            </View>
-
+            <CHomeModeTab selectedType={selectedType} setSelectedType={setSelectedType} />
             <View
                 style={{
                     backgroundColor: "black",
@@ -95,12 +81,19 @@ const CLayoutMain = () => {
                     justifyContent: "center",
                     alignItems: "center",
                     gap: 20,
-                    height: 150
+                    height: 150,
                 }}
             >
                 <CHomeCollectionButton />
                 <CHomeMapDataButton />
-                <CHomeCameraButton />
+                <Animated.View
+                    style={{
+                        opacity: fadeAnim,
+                        transform: [{ scale: scaleAnim }],
+                    }}
+                >
+                    {selectedType === "photo" ? <CHomeCameraButton /> : <CHomeVideoButton />}
+                </Animated.View>
                 <CHomeDefaultFolderButton />
                 <CHomeLegendButton />
             </View>

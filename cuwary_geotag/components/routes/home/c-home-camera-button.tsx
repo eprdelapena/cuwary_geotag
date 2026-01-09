@@ -1,9 +1,18 @@
+import useExpoAv from '@/hooks/common/use-expo-av'
 import React from 'react'
 import { TouchableOpacity, StyleSheet, View } from 'react-native'
 
 const CHomeCameraButton = () => {
+
+    const {
+        handlePressAudio
+    } = useExpoAv();
+
     return (
-        <TouchableOpacity activeOpacity={0.7}>
+        <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={handlePressAudio}
+        >
             <View
                 style={style.outer}
             >
