@@ -51,7 +51,10 @@ type Props = {
 const styles = StyleSheet.create({
     container: {
         padding: 10,
-        justifyContent: "flex-start",
+        position: "absolute",
+        top: 620,
+        left: 200,
+        justifyContent: "flex-end",
         alignItems: "center",
         flexDirection: "row",
         gap: 10,
