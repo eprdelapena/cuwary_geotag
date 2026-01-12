@@ -6,10 +6,20 @@ import CHomeDefaultFolderButton from '@/components/routes/home/c-home-default-fo
 import CHomeLegendButton from '@/components/routes/home/c-home-legend-button'
 import CHomeMapDataButton from '@/components/routes/home/c-home-map-data-button'
 import CHomeVideoButton from '@/components/routes/home/c-home-video-button'
+import useExpoCamera from '@/hooks/common/use-expo-camera'
 import React, { useEffect, useRef, useState } from 'react'
 import { View, Animated } from 'react-native'
 
 const CHome = () => {
+
+  const {
+    permission,
+    requestPermission,
+    facing,
+    setFacing,
+    cameraRef,
+    takePhoto
+  } = useExpoCamera();
 
   const [selectedType, setSelectedType] = useState<"photo" | "video">("photo")
   const fadeAnim = useRef(new Animated.Value(1)).current
@@ -51,8 +61,16 @@ const CHome = () => {
       <CHomeCameraContainer
         selectedType={selectedType}
         setSelectedType={setSelectedType}
+        facing={facing}
+        setFacing={setFacing}
       >
-        <CHomeCameraFeature />
+        <CHomeCameraFeature
+          cameraRef={cameraRef}
+          permission={permission}
+          requestPermission={requestPermission}
+          facing={facing}
+          setFacing={setFacing}
+        />
       </CHomeCameraContainer>
 
       <View
@@ -73,7 +91,7 @@ const CHome = () => {
             transform: [{ scale: scaleAnim }],
           }}
         >
-          {selectedType === "photo" ? <CHomeCameraButton /> : <CHomeVideoButton />}
+          {selectedType === "photo" ? <CHomeCameraButton takePhoto={takePhoto}/> : <CHomeVideoButton />}
         </Animated.View>
         <CHomeDefaultFolderButton />
         <CHomeLegendButton />

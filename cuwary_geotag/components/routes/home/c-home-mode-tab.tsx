@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native'
 
 const CHomeModeTab = ({ selectedType, setSelectedType }: Props) => {
     return (
@@ -52,8 +52,8 @@ const styles = StyleSheet.create({
     container: {
         padding: 10,
         position: "absolute",
-        top: 620,
-        left: 200,
+        top: Platform.OS === "android" ? 630 : 620,
+        left: Platform.OS === "android" ? 185 : 200,
         justifyContent: "flex-end",
         alignItems: "center",
         flexDirection: "row",

@@ -1,13 +1,16 @@
 import React, { ReactNode, useState } from 'react'
-import { View, Text } from 'react-native'
+import { View, Platform } from 'react-native'
 import CHomeCameraFlash from '../c-home-camera-flash'
 import CHomeCameraFlip from '../c-home-camera-flip'
 import CHomeModeTab from '../c-home-mode-tab'
+import { CameraType } from 'expo-camera'
 
 const CHomeCameraContainer = ({
     children,
     selectedType,
-    setSelectedType
+    setSelectedType,
+    facing,
+    setFacing
 }: Props) => {
 
     return (
@@ -20,7 +23,7 @@ const CHomeCameraContainer = ({
             <View
                 style={{
                     gap: 15,
-                    left: 320,
+                    left: Platform.OS === "android" ? 310 : 320,
                     paddingTop: 20,
                     position: "absolute",
                     flexDirection: "row",
@@ -31,7 +34,10 @@ const CHomeCameraContainer = ({
                 }}
             >
                 <CHomeCameraFlash />
-                <CHomeCameraFlip />
+                <CHomeCameraFlip
+                    facing={facing}
+                    setFacing={setFacing}
+                />
             </View>
             {children}
             <CHomeModeTab selectedType={selectedType} setSelectedType={setSelectedType} />
@@ -44,6 +50,8 @@ export default CHomeCameraContainer
 type Props = {
     selectedType: "photo" | "video",
     setSelectedType: React.Dispatch<React.SetStateAction<"photo" | "video">>
+    facing: CameraType,
+    setFacing: React.Dispatch<React.SetStateAction<CameraType>>
     children: ReactNode,
 }
 

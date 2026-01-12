@@ -1,8 +1,11 @@
 import useExpoAv from '@/hooks/common/use-expo-av'
+import { CameraCapturedPicture } from 'expo-camera';
 import React from 'react'
 import { TouchableOpacity, StyleSheet, View } from 'react-native'
 
-const CHomeCameraButton = () => {
+const CHomeCameraButton = ({
+    takePhoto
+}: Props) => {
 
     const {
         handlePressAudio
@@ -11,7 +14,10 @@ const CHomeCameraButton = () => {
     return (
         <TouchableOpacity
             activeOpacity={0.7}
-            onPress={handlePressAudio}
+            onPress={() => {
+                takePhoto();
+                handlePressAudio();
+            }}
         >
             <View
                 style={style.outer}
@@ -44,3 +50,7 @@ const style = StyleSheet.create({
         backgroundColor: "#fff",
     },
 })
+
+type Props = {
+    takePhoto: () => Promise<CameraCapturedPicture | undefined>
+}
