@@ -1,18 +1,20 @@
-import { StyleSheet, TouchableOpacity, Text } from "react-native"
-import { Zap } from "lucide-react-native"
-import { useState } from "react"
+import { FlashMode } from "expo-camera";
+import { Zap } from "lucide-react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 
-const CHomeCameraFlash = () => {
-    const [isFlash, setIsFlash] = useState<boolean>(false);
+const CHomeCameraFlash = ({
+    flash,
+    setFlash
+}: Props) => {
 
     return (
         <>
             <TouchableOpacity
                 activeOpacity={0.7}
                 style={style.ButtonStyle}
-                onPress={() => setIsFlash(!isFlash)}
+                onPress={() => setFlash(flash === "on" ? "off" : "on")}
             >
-                <Zap color={isFlash ? "yellow" : "white"} size={35} />
+                <Zap color={flash === "on" ? "yellow" : "white"} size={35} />
             </TouchableOpacity>
         </>
     )
@@ -26,3 +28,8 @@ const style = StyleSheet.create({
         justifyContent: "center",
     }
 })
+
+type Props = {
+    flash: FlashMode,
+    setFlash: React.Dispatch<React.SetStateAction<FlashMode>>
+}

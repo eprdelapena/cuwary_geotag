@@ -8,7 +8,7 @@ import CHomeMapDataButton from '@/components/routes/home/c-home-map-data-button'
 import CHomeVideoButton from '@/components/routes/home/c-home-video-button'
 import useExpoCamera from '@/hooks/common/use-expo-camera'
 import React, { useEffect, useRef, useState } from 'react'
-import { View, Animated } from 'react-native'
+import { Animated, View } from 'react-native'
 
 const CHome = () => {
 
@@ -18,7 +18,9 @@ const CHome = () => {
     facing,
     setFacing,
     cameraRef,
-    takePhoto
+    takePhoto,
+    setFlash,
+    flash
   } = useExpoCamera();
 
   const [selectedType, setSelectedType] = useState<"photo" | "video">("photo")
@@ -63,8 +65,11 @@ const CHome = () => {
         setSelectedType={setSelectedType}
         facing={facing}
         setFacing={setFacing}
+        flash={flash}
+        setFlash={setFlash}
       >
         <CHomeCameraFeature
+        flash={flash}
           cameraRef={cameraRef}
           permission={permission}
           requestPermission={requestPermission}
@@ -91,7 +96,7 @@ const CHome = () => {
             transform: [{ scale: scaleAnim }],
           }}
         >
-          {selectedType === "photo" ? <CHomeCameraButton takePhoto={takePhoto}/> : <CHomeVideoButton />}
+          {selectedType === "photo" ? <CHomeCameraButton takePhoto={takePhoto} /> : <CHomeVideoButton />}
         </Animated.View>
         <CHomeDefaultFolderButton />
         <CHomeLegendButton />

@@ -1,16 +1,18 @@
-import React, { ReactNode, useState } from 'react'
-import { View, Platform } from 'react-native'
+import { CameraType, FlashMode } from 'expo-camera'
+import React, { ReactNode } from 'react'
+import { Platform, View } from 'react-native'
 import CHomeCameraFlash from '../c-home-camera-flash'
 import CHomeCameraFlip from '../c-home-camera-flip'
 import CHomeModeTab from '../c-home-mode-tab'
-import { CameraType } from 'expo-camera'
 
 const CHomeCameraContainer = ({
     children,
     selectedType,
     setSelectedType,
     facing,
-    setFacing
+    setFacing,
+    flash,
+    setFlash
 }: Props) => {
 
     return (
@@ -33,7 +35,10 @@ const CHomeCameraContainer = ({
                     zIndex: 2
                 }}
             >
-                <CHomeCameraFlash />
+                <CHomeCameraFlash
+                    flash={flash}
+                    setFlash={setFlash}
+                />
                 <CHomeCameraFlip
                     facing={facing}
                     setFacing={setFacing}
@@ -51,7 +56,9 @@ type Props = {
     selectedType: "photo" | "video",
     setSelectedType: React.Dispatch<React.SetStateAction<"photo" | "video">>
     facing: CameraType,
-    setFacing: React.Dispatch<React.SetStateAction<CameraType>>
+    setFacing: React.Dispatch<React.SetStateAction<CameraType>>,
+    flash: FlashMode,
+    setFlash: React.Dispatch<React.SetStateAction<FlashMode>>
     children: ReactNode,
 }
 

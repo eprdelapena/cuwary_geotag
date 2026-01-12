@@ -1,12 +1,13 @@
+import { CameraType, CameraView, FlashMode, PermissionResponse } from "expo-camera"
 import React from "react"
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
-import { CameraView, CameraType, useCameraPermissions, PermissionResponse } from "expo-camera"
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
 
 const CHomeCameraFeature = ({
     permission,
     requestPermission,
     facing,
-    cameraRef
+    cameraRef,
+    flash
 }: Props) => {
 
     if (!permission) {
@@ -38,6 +39,7 @@ const CHomeCameraFeature = ({
                 style={StyleSheet.absoluteFill}
                 facing={facing}
                 ref={cameraRef}
+                flash={flash as FlashMode}
             />
 
 
@@ -87,4 +89,5 @@ type Props = {
     facing: CameraType
     setFacing: React.Dispatch<React.SetStateAction<CameraType>>
     cameraRef: React.RefObject<CameraView | null>
+    flash: FlashMode
 }
