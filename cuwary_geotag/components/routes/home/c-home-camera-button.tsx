@@ -1,4 +1,5 @@
-import useAudio from '@/hooks/common/use-expo-av';
+
+import useAudio from '@/hooks/common/use-expo-audio';
 import { CameraCapturedPicture } from 'expo-camera';
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
