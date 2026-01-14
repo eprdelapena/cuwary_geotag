@@ -20,7 +20,7 @@ const CHome = () => {
     cameraRef,
     takePhoto,
     setFlash,
-    flash
+    flash,
   } = useExpoCamera();
 
   const [selectedType, setSelectedType] = useState<"photo" | "video">("photo")
@@ -69,7 +69,7 @@ const CHome = () => {
         setFlash={setFlash}
       >
         <CHomeCameraFeature
-        flash={flash}
+          flash={flash}
           cameraRef={cameraRef}
           permission={permission}
           requestPermission={requestPermission}

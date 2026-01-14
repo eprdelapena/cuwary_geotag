@@ -1,6 +1,6 @@
-import { StyleSheet, TouchableOpacity, Text } from "react-native"
-import { RotateCw } from "lucide-react-native"
 import { CameraType } from "expo-camera"
+import { RotateCw } from "lucide-react-native"
+import { StyleSheet, TouchableOpacity } from "react-native"
 
 const CHomeCameraFlip = ({
     facing,

@@ -1,6 +1,5 @@
-import React from 'react'
-import { Platform, View } from 'react-native';
-import CAndroidStatusBar from './c-android-status-bar';
+import React from 'react';
+import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const CIosStatusBar = () => {
@@ -19,6 +18,7 @@ const CIosStatusBar = () => {
                     paddingLeft: left,
                     paddingRight: right,
                     paddingBottom: bottom,
+                    backgroundColor: "black"
                 }}
             />
         </>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -17,7 +17,8 @@ const CAndroidStatusBar = () => {
                     paddingTop: top,
                     paddingLeft: left,
                     paddingRight: right,
-                    paddingBottom: bottom
+                    paddingBottom: bottom,
+                    backgroundColor: "black"
                 }}
             />
         </>

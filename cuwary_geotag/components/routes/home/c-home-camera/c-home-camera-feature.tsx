@@ -2,14 +2,16 @@ import { CameraType, CameraView, FlashMode, PermissionResponse } from "expo-came
 import React from "react"
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
 
+
 const CHomeCameraFeature = ({
     permission,
     requestPermission,
     facing,
     cameraRef,
-    flash
+    flash,
 }: Props) => {
 
+    
     if (!permission) {
         return <View style={{ flex: 1, backgroundColor: "black" }} />
     }
@@ -34,16 +36,14 @@ const CHomeCameraFeature = ({
     }
 
     return (
-        <View style={styles.container}>
-            <CameraView
-                style={StyleSheet.absoluteFill}
-                facing={facing}
-                ref={cameraRef}
-                flash={flash as FlashMode}
-            />
-
-
-        </View>
+            <View style={styles.container}>
+                <CameraView
+                    style={StyleSheet.absoluteFill}
+                    facing={facing}
+                    ref={cameraRef}
+                    flash={flash as FlashMode}
+                />
+            </View>
     )
 }
 
@@ -89,5 +89,5 @@ type Props = {
     facing: CameraType
     setFacing: React.Dispatch<React.SetStateAction<CameraType>>
     cameraRef: React.RefObject<CameraView | null>
-    flash: FlashMode
+    flash: FlashMode,
 }
